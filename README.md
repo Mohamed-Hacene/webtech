@@ -9,11 +9,11 @@ This is a short application to say "Hello !"
 ## 2. Start it
 
 * 1. To start the application run:
-```
-npm start (or npm run start)
+```bash
+npm start #or npm run start
 ```
 * 2. To start the application in dev mode:
-```
+```bash
 npm run develop
 ```
 
