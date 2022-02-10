@@ -1,5 +1,5 @@
 # Webtech
-ECE -DevOps S2 2021/2022
+ECE - Web Application S2 2021/2022
 
 ## 1. Short Description
 
