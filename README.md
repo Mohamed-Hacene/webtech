@@ -19,8 +19,8 @@ npm run develop
 
 ## 3. Use it
 
-* 1. Go on ```localhost:8080```
+* 1. Go on http://localhost:8080/
 * 2. On home page you have an explanation of the website
-* 3. If you go on ```localhost:8080/hello?name=<YourName>```, the website will tell you hello !
-* 4. If you go on ```localhost:8080/hello?name=Mohamed-Hacene```, you will see a short description of me
+* 3. If you go on http://localhost:8080/hello?name=, the website will tell you hello !
+* 4. If you go on http://localhost:8080/hello?name=Mohamed-Hacene, you will see a short description of me
 
