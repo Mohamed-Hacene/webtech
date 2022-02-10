@@ -4,7 +4,7 @@ Mohamed-Hacene BOUKERMA - Ambroise ROUXJEAN
 
 ## 1. Short Description
 
-This is a short application to say "Hello !"
+This is a new web chatting application !
 
 ## 2. Start it
 
