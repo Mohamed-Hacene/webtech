@@ -20,25 +20,26 @@ module.exports = {
     const route = url.parse(req.url)
     const path = route.pathname;
     const params = qs.parse(route.query)
-
-    res.writeHead(200, {'Content-Type': 'text/html'});
+    // Routes
     switch (path){
         case '/hello':
-            if (params['name'] === 'Mohamed-Hacene'){
-                res.write("Hello I'm Mohamed-Hacene, I work in an engineering school and this is my first node.js website !");
+            res.writeHead(200, {'Content-Type': 'text/html'})
+            switch (params['name']){
+                case 'Mohamed-Hacene':
+                    res.write("Hello I'm Mohamed-Hacene, I work in an engineering school and this is my first node.js website !")
+                    break
+                default:
+                    res.write('Hello ' + params['name']) 
             }
-            else {
-                res.write('Hello ' + params['name']);
-            }
-            break; 
+            break
         case '/':
+            res.writeHead(200, {'Content-Type': 'text/html'})
             res.write(content);
             break;
         default :
-            res.writeHead(404, {'Content-Type': 'text/html'});
-            res.write("404 Not Found\n");
-            break;
+            res.writeHead(404, {'Content-Type': 'text/html'})
+            res.write("404 Not Found\n")
         }
-    res.end();
+    res.end()
 }
 }
