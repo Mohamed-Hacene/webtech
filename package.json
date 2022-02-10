@@ -2,7 +2,7 @@
   "name": "webtech-chat",
   "version": "0.0.0",
   "description": "Webtech Chating application",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "start": "node ./lib/index.js",
     "develop": "./node_modules/.bin/nodemon ./lib/index.js"
@@ -15,7 +15,7 @@
     }
   ],
   "license": "UNLICENSED",
-  "dependencies": {
+  "devDependencies": {
     "nodemon": "^2.0.15"
   }
 }
