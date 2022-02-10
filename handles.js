@@ -22,23 +22,23 @@ module.exports = {
     const params = qs.parse(route.query)
 
     res.writeHead(200, {'Content-Type': 'text/html'});
-
-    if (path === '/hello' && 'name' in params){
-        if (params['name'] === 'Mohamed-Hacene'){
-            res.write("Hello I'm Mohamed-Hacene, I work in an engineering school and this is my first node.js website !");
+    switch (path){
+        case '/hello':
+            if (params['name'] === 'Mohamed-Hacene'){
+                res.write("Hello I'm Mohamed-Hacene, I work in an engineering school and this is my first node.js website !");
+            }
+            else {
+                res.write('Hello ' + params['name']);
+            }
+            break; 
+        case '/':
+            res.write(content);
+            break;
+        default :
+            res.writeHead(404, {'Content-Type': 'text/html'});
+            res.write("404 Not Found\n");
+            break;
         }
-        else {
-        res.write('Hello ' + params['name']);
-        }
-    } 
-    else if (path === '/'){
-        res.write(content);
-    }
-    else {
-        res.writeHead(404, {'Content-Type': 'text/html'});
-        res.write("404 Not Found\n");
-    }
-    
     res.end();
 }
 }
