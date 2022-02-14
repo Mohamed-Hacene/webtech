@@ -17,5 +17,8 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.2"
   }
 }
