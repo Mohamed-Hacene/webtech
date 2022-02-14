@@ -18,10 +18,9 @@ npm run develop
 
 ## 3. Use it
 
-* 1. Go on http://localhost:8080/
-* 2. On home page you have an explanation of the website
-* 3. If you go on http://localhost:8080/hello?name=, the website will tell you hello !
-* 4. If you go on http://localhost:8080/hello?name=Mohamed-Hacene, you will see a short description of me
+* 1. Go on http://localhost:3000/
+* 2. On home page you have a list of channels
+* 3. If you click on it, you will see all available channels
 
 ## About Us
 
