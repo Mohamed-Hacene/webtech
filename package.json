@@ -1,11 +1,11 @@
 {
   "name": "webtech-chat",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Webtech Chating application",
   "main": "./lib/index.js",
   "scripts": {
-    "start": "node ./lib/index.js",
-    "develop": "./node_modules/.bin/nodemon ./lib/index.js"
+    "start": "./bin/start",
+    "develop": "./node_modules/.bin/nodemon ./bin/start"
   },
   "keywords": [],
   "author": "Mohamed-Hacène BOUKERMA",
@@ -19,6 +19,8 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mixme": "^0.5.4",
+    "uuid": "^8.3.2"
   }
 }
