@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const app = require('../lib/app')
+// Configs
+const config = {
+  port: 3000
+}
+// Start server
+app.listen(config.port, () => {
+  console.log(`Webtech Chat is waiting for you at http://localhost:${config.port}`)
+})
