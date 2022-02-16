@@ -5,7 +5,8 @@
   "main": "./lib/index.js",
   "scripts": {
     "start": "./bin/start",
-    "develop": "./node_modules/.bin/nodemon ./bin/start"
+    "develop": "./node_modules/.bin/nodemon ./bin/start",
+    "test": "mocha 'test/**/*.js'"
   },
   "keywords": [],
   "author": "Mohamed-Hacène BOUKERMA",
@@ -16,11 +17,25 @@
   ],
   "license": "UNLICENSED",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "mocha": "^9.2.0",
+    "nodemon": "^2.0.15",
+    "should": "^13.2.3",
+    "supertest": "^6.2.2"
   },
   "dependencies": {
+    "body-parser": "^1.19.1",
     "express": "^4.17.2",
+    "level": "^7.0.1",
     "mixme": "^0.5.4",
     "uuid": "^8.3.2"
+  },
+  "mocha": {
+    "throw-deprecation": true,
+    "require": [
+      "should"
+    ],
+    "inline-diffs": true,
+    "reporter": "spec",
+    "recursive": true
   }
 }
