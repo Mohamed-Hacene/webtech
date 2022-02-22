@@ -1,4 +1,4 @@
-# Webtech Chat Back End
+# Webtech Chat
 ECE - Web Application S2 2021/2022
 
 ## Short Description
@@ -14,20 +14,8 @@ npm start #or npm run start
 ```
 
 ### On development
-* Install all dependencies:
-```bash
-npm install
-```
 
-* Test the application:
-```bash
-npm test
-```
-
-* Start the application in dev mode:
-```bash
-npm run develop
-```
+Go into [back-end](./packages/back-end/README.md) to see details
 
 ## Use it
 
