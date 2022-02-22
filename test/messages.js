@@ -1,4 +1,3 @@
-
 const supertest = require('supertest')
 const app = require('../lib/app')
 const db = require('../lib/db')
@@ -9,7 +8,7 @@ describe('messages', () => {
     await db.admin.clear()
   })
   
-  it.skip('list empty', async () => {
+  it('list empty', async () => {
     // Create a channel
     const {body: channel} = await supertest(app)
     .post('/channels')
@@ -21,26 +20,30 @@ describe('messages', () => {
     messages.should.eql([])
   })
   
-  it.skip('list one message', async () => {
+  it('list one element', async () => {
     // Create a channel
     const {body: channel} = await supertest(app)
     .post('/channels')
     .send({name: 'channel 1'})
-    // and a message inside it
+    // Create a message inside it
     await supertest(app)
     .post(`/channels/${channel.id}/messages`)
-    .send({content: 'Hello ECE'})
+    .send({
+      author: 'user_1',
+      content: 'Hello ECE'
+    })
     // Get messages
     const {body: messages} = await supertest(app)
     .get(`/channels/${channel.id}/messages`)
     .expect(200)
     messages.should.match([{
       creation: (it) => it.should.be.approximately(Date.now(), 1000),
-      content: 'Hello ECE'
+      content: 'Hello ECE',
+      channel: channel.id,
     }])
   })
   
-  it.skip('add one element', async () => {
+  it('add one element', async () => {
     // Create a channel
     const {body: channel} = await supertest(app)
     .post('/channels')
@@ -48,7 +51,10 @@ describe('messages', () => {
     // Create a message inside it
     const {body: message} = await supertest(app)
     .post(`/channels/${channel.id}/messages`)
-    .send({content: 'Hello ECE'})
+    .send({
+      author: 'user_1',
+      content: 'Hello ECE'
+    })
     .expect(201)
     message.should.match({
       creation: (it) => it.should.be.approximately(Date.now(), 1000),
@@ -57,7 +63,8 @@ describe('messages', () => {
     // Check it was correctly inserted
     const {body: messages} = await supertest(app)
     .get(`/channels/${channel.id}/messages`)
+    .expect(200)
     messages.length.should.eql(1)
   })
-  
+    
 })
