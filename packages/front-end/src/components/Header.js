@@ -1,5 +1,6 @@
 
 /** @jsxImportSource @emotion/react */
+import { useCookies } from 'react-cookie';
 import { useTheme } from '@mui/styles';
 import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -30,6 +31,12 @@ const Header = ({
   const handleDrawerToggle = (e) => {
     drawerToggleListener()
   }
+  const [cookies,,] = useCookies([])
+  let payload
+  if(cookies.oauth) {
+    const id_payload = cookies.oauth.id_token.split('.')[1]
+    payload = JSON.parse(atob(id_payload))
+  }
   return (
     <header css={styles.header}>
       <IconButton
@@ -40,7 +47,7 @@ const Header = ({
       >
         <MenuIcon />
       </IconButton>
-      Header
+      Header - { payload ? payload.username : 'unauthorized' }
     </header>
   )
 }
