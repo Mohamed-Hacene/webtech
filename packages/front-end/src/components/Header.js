@@ -47,7 +47,7 @@ const Header = ({
       >
         <MenuIcon />
       </IconButton>
-      Header - { payload ? payload.username : 'unauthorized' }
+      Header - { payload ? payload.email : 'unauthorized' }
     </header>
   )
 }
