@@ -1,0 +1,8 @@
+services:
+  dex:
+    image: dexidp/dex
+    ports:
+      - 5556:5556
+    volumes:
+      - ./packages/dex:/etc/dex
+    command: dex serve /etc/dex/config.yaml
