@@ -9,10 +9,12 @@ const styles = {
   },
 }
 
-export default () => {
+const Footer = () => {
   return (
     <footer style={styles.footer}>
       footer
     </footer>
   );
 }
+
+export default Footer

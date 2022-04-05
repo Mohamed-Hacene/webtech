@@ -23,7 +23,7 @@ const styles = {
   },
 }
 
-export default ({
+const MessagesForm = ({
   addMessage
 }) => {
   const onSubmit = (e) => {
@@ -43,3 +43,5 @@ export default ({
     </form>
   )
 }
+
+export default MessagesForm

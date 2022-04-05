@@ -36,7 +36,7 @@ const styles = {
   },
 }
 
-export default ({
+const Messages = ({
   channel,
   messages
 }) => {
@@ -66,3 +66,5 @@ export default ({
     </div>
   )
 }
+
+export default Messages

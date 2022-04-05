@@ -3,15 +3,15 @@
 
 const styles = {
   root: {
-    minWidth: '200px',
   },
   channel: {
+    color: '#fff',
     padding: '.2rem .5rem',
     whiteSpace: 'nowrap', 
   }
 }
 
-export default ({
+const Channels = ({
   channels
 }) => {
   return (
@@ -24,3 +24,5 @@ export default ({
     </ul>
   );
 }
+
+export default Channels
