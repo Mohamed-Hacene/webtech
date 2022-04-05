@@ -22,4 +22,6 @@ router.post('/', async (req, res) => {
   }
 })
 
+// TODO: create routes: get, delete, update, ...
+
 module.exports = router

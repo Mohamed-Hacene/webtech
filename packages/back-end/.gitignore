@@ -1,5 +1,5 @@
 .*
-*lock*
-node_modules
-!.gitignore
 db
+node_modules
+package-lock.json
+!.gitignore

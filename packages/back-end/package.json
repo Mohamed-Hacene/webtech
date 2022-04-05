@@ -1,6 +1,6 @@
 {
   "name": "webtech-chat-back-end",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Webtech Chating application",
   "main": "./lib/index.js",
   "scripts": {
@@ -8,7 +8,6 @@
     "develop": "./node_modules/.bin/nodemon ./bin/start",
     "test": "mocha 'test/**/*.js'"
   },
-  "keywords": [],
   "author": "Mohamed-Hacène BOUKERMA",
   "contributors": [
     {
@@ -16,18 +15,18 @@
     }
   ],
   "license": "UNLICENSED",
-  "devDependencies": {
-    "mocha": "^9.2.0",
-    "nodemon": "^2.0.15",
-    "should": "^13.2.3",
-    "supertest": "^6.2.2"
-  },
   "dependencies": {
     "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "level": "^7.0.1",
     "mixme": "^0.5.4",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "mocha": "^9.2.0",
+    "nodemon": "^2.0.15",
+    "should": "^13.2.3",
+    "supertest": "^6.2.2"
   },
   "mocha": {
     "throw-deprecation": true,

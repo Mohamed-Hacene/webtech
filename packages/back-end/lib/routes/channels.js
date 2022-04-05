@@ -70,4 +70,6 @@ router.post('/:id/messages', async (req, res) => {
   }
 })
 
+// TODO: create messages routes: delete, update, ...
+
 module.exports = router

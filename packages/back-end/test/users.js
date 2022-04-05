@@ -1,3 +1,4 @@
+
 const supertest = require('supertest')
 const app = require('../lib/app')
 const db = require('../lib/db')
@@ -43,4 +44,7 @@ describe('users', () => {
     .expect(200)  
     users.length.should.eql(1)
   })
+  
+  // TODO: test other routes: get, update, delete, ...
+  
 })

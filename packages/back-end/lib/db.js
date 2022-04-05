@@ -4,6 +4,7 @@ const level = require('level')
 const db = level(__dirname + '/../db')
 
 module.exports = {
+  // TODO: refactor to multiple modules (similar to routes)
   channels: {
     create: async (channel) => {
       if(!channel.name) throw Error('Invalid channel.')
@@ -77,6 +78,7 @@ module.exports = {
         })
       })
     },
+    // TODO: add methods: update, delete, ...
   },
   users: {
     create: async (user) => {
@@ -102,6 +104,7 @@ module.exports = {
         })
       })
     }
+    // TODO: add methods: update, delete, get, ...
   },
   admin: {
     clear: async () => {
