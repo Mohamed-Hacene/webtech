@@ -1,5 +1,6 @@
 
 /** @jsxImportSource @emotion/react */
+import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
 const styles = {
@@ -25,23 +26,26 @@ const styles = {
 }
 
 const MessagesForm = ({
-  addMessage
+  addMessage,
+  channelId,
+  user
 }) => {
-  const [cookies,,] = useCookies([])
-  let payload
-  if(cookies.oauth) {
-    const id_payload = cookies.oauth.id_token.split('.')[1]
-    payload = JSON.parse(atob(id_payload))
-  }
-  const onSubmit = (e) => {
+  const [cookies] = useCookies([]);
+  const onSubmit = async (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
-    addMessage({
+    // Send to back-end
+    const {data: message} = await axios.post(
+      `http://localhost:3001/channels/${channelId}/messages`
+    , {
       content: data.get('content'),
-      author: payload ? payload.email : 'unauthorized',
-      creation: Date.now(),
+    }, {
+      headers: {
+        'Authorization': `Bearer ${cookies.oauth.access_token}`
+      }
     })
-    e.target.elements.content.value = ''
+    addMessage(message) // Update react state
+    e.target.elements.content.value = '' // Refresh the input form
   } 
   return (
     <form css={styles.form}  onSubmit={onSubmit}>

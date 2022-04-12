@@ -12,12 +12,13 @@ const styles = {
 }
 
 const Channels = ({
-  channels
+  channels,
+  setCurrentChannel
 }) => {
   return (
     <ul style={styles.root}>
       { channels.map( (channel, i) => (
-        <li key={i} css={styles.channel}>
+        <li key={i} css={styles.channel} onClick={() => setCurrentChannel(channel)}>
           {channel.name}
         </li>
       ))}

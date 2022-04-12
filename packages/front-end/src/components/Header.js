@@ -25,18 +25,14 @@ const useStyles = (theme) => ({
 })
 
 const Header = ({
-  drawerToggleListener
+  drawerToggleListener,
+  user
 }) => {
   const styles = useStyles(useTheme())
   const handleDrawerToggle = (e) => {
     drawerToggleListener()
   }
   const [cookies,,] = useCookies([])
-  let payload
-  if(cookies.oauth) {
-    const id_payload = cookies.oauth.id_token.split('.')[1]
-    payload = JSON.parse(atob(id_payload))
-  }
   return (
     <header css={styles.header}>
       <IconButton
@@ -47,7 +43,7 @@ const Header = ({
       >
         <MenuIcon />
       </IconButton>
-      Header - { payload ? payload.email : 'unauthorized' }
+      Header - { user ? user.email : 'unauthorized' }
     </header>
   )
 }

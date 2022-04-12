@@ -1,6 +1,6 @@
 
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useTheme } from '@mui/styles';
 import './App.css';
@@ -26,13 +26,26 @@ const App = () => {
   const styles = useStyles(useTheme())
   const [cookies,,] = useCookies([]);
   const [drawerMobileVisible, setDrawerMobileVisible] = useState(false)
+  const [user, setUser] = useState(null)
   const drawerToggleListener = () => {
     setDrawerMobileVisible(!drawerMobileVisible)
   }
+  useEffect( () => {
+    if(cookies.oauth) {
+      const id_payload = cookies.oauth.id_token.split('.')[1]
+      const payload = JSON.parse(atob(id_payload))
+      setUser({
+        email: payload.email
+      })
+    } else {
+      setUser(null)
+    }
+  }, [cookies.oauth])
+  
   return (
     <div className="App" css={styles.root}>
-      <Header drawerToggleListener={drawerToggleListener}/>
-      { cookies.oauth ? <Main drawerMobileVisible={drawerMobileVisible}/> : <Login/> }
+      <Header drawerToggleListener={drawerToggleListener} user={user}/>
+      { cookies.oauth ? <Main drawerMobileVisible={drawerMobileVisible} user={user}/> : <Login/> }
       <Footer />
     </div>
   );
