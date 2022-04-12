@@ -1,7 +1,10 @@
 
 /** @jsxImportSource @emotion/react */
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import { useContext } from 'react';
+// Local
+import Context from '../Context'
+
 
 const styles = {
   form: {
@@ -27,10 +30,9 @@ const styles = {
 
 const MessagesForm = ({
   addMessage,
-  channelId,
-  user
+  channelId
 }) => {
-  const [cookies] = useCookies([]);
+  const {oauth} = useContext(Context);
   const onSubmit = async (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
@@ -41,7 +43,7 @@ const MessagesForm = ({
       content: data.get('content'),
     }, {
       headers: {
-        'Authorization': `Bearer ${cookies.oauth.access_token}`
+        'Authorization': `Bearer ${oauth.access_token}`
       }
     })
     addMessage(message) // Update react state

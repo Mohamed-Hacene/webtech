@@ -1,13 +1,13 @@
 
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
+import { useContext, useEffect, useState } from 'react';
 import { useTheme } from '@mui/styles';
 import { Drawer, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 // Local
 import Channels from './Channels'
 import Channel from './Channel'
+import Context from '../Context'
 
 const styles = {
   main: {
@@ -27,23 +27,20 @@ const styles = {
   },
 }
 
-const Main = ({
-  drawerMobileVisible,
-  user
-}) => {
+const Main = () => {
   const theme = useTheme()
+  const {drawerMobileVisible, oauth} = useContext(Context)
   const alwaysOpen = useMediaQuery(theme.breakpoints.up('sm'))
   const isDrawerVisible = alwaysOpen || drawerMobileVisible
   // Fetch channels from back-end
   const [channels, setChannels] = useState([])
   const [currentChannel, setCurrentChannel] = useState(null)
-  const [cookies] = useCookies([])
   useEffect( () => {
     const fetch = async () => {
       try {
         const {data: channels} = await axios.get('http://localhost:3001/channels', {
           headers: {
-            'Authorization': `Bearer ${cookies.oauth.access_token}`
+            'Authorization': `Bearer ${oauth.access_token}`
           }
         })
         setChannels(channels)
@@ -54,7 +51,7 @@ const Main = ({
       }
     }
     fetch()
-  }, [setChannels, cookies.oauth.access_token])
+  }, [setChannels, oauth.access_token])
   return (
     <main css={styles.main}>
       <Drawer
@@ -69,7 +66,7 @@ const Main = ({
       >
         <Channels channels={channels} setCurrentChannel={setCurrentChannel} />
       </Drawer>
-      {currentChannel ? <Channel channel={currentChannel} user={user}/> : '' }
+      {currentChannel ? <Channel channel={currentChannel}/> : '' }
     </main>
   );
 }

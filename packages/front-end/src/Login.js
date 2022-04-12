@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useCookies} from 'react-cookie';
 import qs from 'qs'
 import axios from 'axios'
@@ -7,6 +7,8 @@ import axios from 'axios'
 import {useTheme} from '@mui/styles';
 import {Button} from '@mui/material';
 import getPkce from 'oauth-pkce';
+// Local
+import Context from './Context'
 
 const useStyles = (theme) => ({
   root: {
@@ -44,19 +46,17 @@ const Redirect = ({config, codeChallenge}) => {
   )
 }
 
-const Tokens = ({oauth}) => {
-  const [,, removeCookie] = useCookies([]);
+const Tokens = () => {
   const styles = useStyles(useTheme())
-  const {id_token} = oauth
-  const id_payload = id_token.split('.')[1]
-  const {email} = JSON.parse(atob(id_payload))
+  const {oauth, setOauth} = useContext(Context) // Access to context
   const logout = (e) => {
     e.stopPropagation()
-    removeCookie('oauth')
+    // Remove oauth state on logout
+    setOauth(null)
   }
   return (
     <div css={styles.root}>
-      Welcome {email}!
+      Welcome {oauth.email}!
       <div>
         <Button onClick={logout} variant="contained">Logout</Button>
       </div>
@@ -64,14 +64,22 @@ const Tokens = ({oauth}) => {
   )
 }
 
-const LoadToken = function({code, codeVerifier, config, removeCookie, setCookie}) {
+const LoadToken = function({code, codeVerifier, config}) {
   const styles = useStyles(useTheme())
+  const [,, removeCookie] = useCookies([]);
+  const {setOauth} = useContext(Context) // Access to context
   useEffect(() => {
     const fetch = async () => {
       try {
-        const {data: oauth} = await axios.post(config.token_endpoint, qs.stringify({grant_type: 'authorization_code', client_id: `${config.client_id}`, code_verifier: `${codeVerifier}`, redirect_uri: `${config.redirect_uri}`, code: `${code}`}))
+        const {data: oauth} = await axios.post(config.token_endpoint, qs.stringify({
+          grant_type: 'authorization_code',
+          client_id: `${config.client_id}`,
+          code_verifier: `${codeVerifier}`,
+          redirect_uri: `${config.redirect_uri}`,
+          code: `${code}`
+        }))
         removeCookie('code_verifier')
-        setCookie('oauth', oauth)
+        setOauth(oauth)
         window.location = '/'
       } catch (err) {
         console.error(err)
@@ -86,7 +94,8 @@ const LoadToken = function({code, codeVerifier, config, removeCookie, setCookie}
 
 const Login = ({onUser}) => {
   const styles = useStyles(useTheme())
-  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [cookies, setCookie,] = useCookies([]);
+  const {oauth} = useContext(Context); // Access to context
   const [pkce, setPkce] = useState({})
   useEffect(() => {
     const pkceWrapper = async () => {
@@ -112,19 +121,23 @@ const Login = ({onUser}) => {
   const code = params.get('code')
   // Is there a code query parameters in the url
   if (!code) { // No: we are no being redirected from an oauth server
-    if (!cookies.oauth && pkce) {
+    if (!oauth && pkce) {
       setCookie('code_verifier', pkce.verifier)
       return (
         <Redirect codeChallenge={pkce.challenge} config={config} css={styles.root}/>
       )
     } else { // Yes: user is already logged in, great, is is working
       return (
-        <Tokens oauth={cookies.oauth} css={styles.root}/>
+        <Tokens css={styles.root}/>
       )
     }
   } else { // Yes, we are coming from an oauth server
     return (
-      <LoadToken code={code} codeVerifier={cookies.code_verifier} config={config} setCookie={setCookie} removeCookie={removeCookie}/>
+      <LoadToken
+        code={code}
+        codeVerifier={cookies.code_verifier}
+        config={config}
+        />
     )
   }
 }

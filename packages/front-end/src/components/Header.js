@@ -1,9 +1,11 @@
 
 /** @jsxImportSource @emotion/react */
-import { useCookies } from 'react-cookie';
+import { useContext } from 'react';
 import { useTheme } from '@mui/styles';
 import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+// Local
+import Context from '../Context'
 
 const useStyles = (theme) => ({
   header: {
@@ -24,15 +26,12 @@ const useStyles = (theme) => ({
   }
 })
 
-const Header = ({
-  drawerToggleListener,
-  user
-}) => {
+const Header = () => {
   const styles = useStyles(useTheme())
+  const {drawerToggleListener, oauth} = useContext(Context)
   const handleDrawerToggle = (e) => {
     drawerToggleListener()
   }
-  const [cookies,,] = useCookies([])
   return (
     <header css={styles.header}>
       <IconButton
@@ -43,7 +42,7 @@ const Header = ({
       >
         <MenuIcon />
       </IconButton>
-      Header - { user ? user.email : 'unauthorized' }
+      Header - { oauth ? oauth.email : 'unauthorized' }
     </header>
   )
 }

@@ -1,11 +1,12 @@
 
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 // Local
 import MessagesForm from './MessagesForm'
 import Messages from './Messages'
+import Context from '../Context'
 
 const styles = {
   root: {
@@ -19,18 +20,17 @@ const styles = {
 }
 
 const Channel = ({
-  channel,
-  user
+  channel
 }) => {
   // Fetch messages from back-end
   const [messages, setMessages] = useState([])
-  const [cookies] = useCookies([]);
+  const {oauth} = useContext(Context);
   useEffect( () => {
     const fetch = async () => {
       try {
         const {data: messages} = await axios.get(`http://localhost:3001/channels/${channel.id}/messages`, {
           headers: {
-            'Authorization': `Bearer ${cookies.oauth.access_token}`
+            'Authorization': `Bearer ${oauth.access_token}`
           }
         })
         setMessages(messages)
@@ -39,7 +39,7 @@ const Channel = ({
       }
     }
     fetch()
-  }, [channel, setMessages, cookies.oauth.access_token])
+  }, [channel, setMessages, oauth.access_token])
   const addMessage = (message) => {
     setMessages([
       ...messages,
@@ -49,7 +49,7 @@ const Channel = ({
   return (
     <div css={styles.root}>
       <Messages channel={channel} messages={messages} />
-      <MessagesForm addMessage={addMessage} channelId={channel.id} user={user} />
+      <MessagesForm addMessage={addMessage} channelId={channel.id} />
     </div>
   );
 }

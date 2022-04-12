@@ -1,14 +1,17 @@
 
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useTheme } from '@mui/styles';
-import './App.css';
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 // Local
+import './App.css';
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Main from './components/Main'
 import Login from './Login'
+import Context from './Context'
+import Oups from './Oups'
 
 const useStyles = (theme) => ({
   root: {
@@ -24,28 +27,28 @@ const useStyles = (theme) => ({
 
 const App = () => {
   const styles = useStyles(useTheme())
-  const [cookies,,] = useCookies([]);
-  const [drawerMobileVisible, setDrawerMobileVisible] = useState(false)
-  const [user, setUser] = useState(null)
-  const drawerToggleListener = () => {
-    setDrawerMobileVisible(!drawerMobileVisible)
-  }
-  useEffect( () => {
-    if(cookies.oauth) {
-      const id_payload = cookies.oauth.id_token.split('.')[1]
-      const payload = JSON.parse(atob(id_payload))
-      setUser({
-        email: payload.email
-      })
-    } else {
-      setUser(null)
-    }
-  }, [cookies.oauth])
-  
+  const {oauth} = useContext(Context)
+  const location = useLocation()
+  const gochannels = (<Navigate
+    to={{
+      pathname: "/channels",
+      state: { from: location }
+    }}
+  />)
+  const gohome = (<Navigate
+    to={{
+      pathname: "/",
+      state: { from: location }
+    }}
+  />)
   return (
     <div className="App" css={styles.root}>
-      <Header drawerToggleListener={drawerToggleListener} user={user}/>
-      { cookies.oauth ? <Main drawerMobileVisible={drawerMobileVisible} user={user}/> : <Login/> }
+      <Header/>
+      <Routes>
+        <Route exact path="/" element={oauth ? gochannels : <Login />}/>
+        <Route path="/channels/*" element={oauth ? <Main /> : gohome}/>
+        <Route path="/Oups" element={<Oups />} />
+      </Routes>
       <Footer />
     </div>
   );
