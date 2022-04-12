@@ -63,6 +63,8 @@ router.get('/:id/messages', async (req, res) => {
 
 router.post('/:id/messages', async (req, res) => {
   try {
+    if(!req.body.author && req.user.email)
+      req.body.author = req.user.email
     const message = await db.messages.create(req.params.id, req.body)
     res.status(201).json(message)
   } catch (err) {
