@@ -5,7 +5,6 @@ import { useTheme } from '@mui/styles';
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-
 const useStyles = (theme) => ({
   root: {
     overflow: 'hidden',
@@ -16,16 +15,13 @@ const useStyles = (theme) => ({
   },
 })
 
-export default function Oups() {
+const EmptyChannel = () => {
   const styles = useStyles(useTheme())
   return (
-    <main css={styles.root}>
-      <div>
-        An unexpected error occured, it is probably not your fault. Sorry.
-        <div>
-          <Link to="/" component={RouterLink}>Go to home</Link>
-        </div>
-      </div>
-    </main>
+    <div css={styles.root}>
+      Go to a channel or create one.
+    </div>
   );
 }
+
+export default EmptyChannel

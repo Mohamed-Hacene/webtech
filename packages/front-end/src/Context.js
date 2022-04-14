@@ -10,6 +10,7 @@ export const ContextProvider = ({
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [oauth, setOauth] = useState(cookies.oauth);
+  const [channels, setChannels] = useState([]);
   const [drawerMobileVisible, setDrawerMobileVisible] = useState(false);
   const drawerToggleListener = () => {
     setDrawerMobileVisible(!drawerMobileVisible)
@@ -19,6 +20,8 @@ export const ContextProvider = ({
       drawerMobileVisible: drawerMobileVisible,
       drawerToggleListener: drawerToggleListener,
       oauth: oauth,
+      channels: channels,
+      setChannels: setChannels,
       setOauth: (oauth) => {
         if(oauth) {
           const id_payload = oauth.id_token.split('.')[1]
@@ -27,6 +30,7 @@ export const ContextProvider = ({
           setCookie('oauth', oauth)
         } else {
           removeCookie('oauth')
+          setChannels([])
         }
         setOauth(oauth)
       }

@@ -47,7 +47,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={oauth ? gochannels : <Login />}/>
         <Route path="/channels/*" element={oauth ? <Main /> : gohome}/>
-        <Route path="/Oups" element={<Oups />} />
+        <Route path="/oups" element={<Oups />} />
       </Routes>
       <Footer />
     </div>

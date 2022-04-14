@@ -2,7 +2,7 @@
 /** @jsxImportSource @emotion/react */
 import { useContext } from 'react';
 import { useTheme } from '@mui/styles';
-import { IconButton } from '@mui/material';
+import { IconButton, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 // Local
 import Context from '../Context'
@@ -23,15 +23,19 @@ const useStyles = (theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'none !important',
     },
+  },
+  button: {
+    float: 'right'
   }
 })
 
 const Header = () => {
   const styles = useStyles(useTheme())
-  const {drawerToggleListener, oauth} = useContext(Context)
+  const {drawerToggleListener, oauth, setOauth} = useContext(Context)
   const handleDrawerToggle = (e) => {
     drawerToggleListener()
   }
+  
   return (
     <header css={styles.header}>
       <IconButton
@@ -43,6 +47,7 @@ const Header = () => {
         <MenuIcon />
       </IconButton>
       Header - { oauth ? oauth.email : 'unauthorized' }
+      { oauth ? <Button css={styles.button} onClick={() => setOauth(null)} variant="link">Logout</Button> : '' }
     </header>
   )
 }

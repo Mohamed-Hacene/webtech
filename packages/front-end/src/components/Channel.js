@@ -3,6 +3,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom'
 // Local
 import MessagesForm from './MessagesForm'
 import Messages from './Messages'
@@ -19,27 +20,34 @@ const styles = {
   },
 }
 
-const Channel = ({
-  channel
-}) => {
+const Channel = () => {
   // Fetch messages from back-end
+  const [channel, setChannel] = useState([])
   const [messages, setMessages] = useState([])
   const {oauth} = useContext(Context);
+  const { id } = useParams()
+  const navigate = useNavigate();
   useEffect( () => {
     const fetch = async () => {
       try {
-        const {data: messages} = await axios.get(`http://localhost:3001/channels/${channel.id}/messages`, {
+        const {data: messages} = await axios.get(`http://localhost:3001/channels/${id}/messages`, {
           headers: {
             'Authorization': `Bearer ${oauth.access_token}`
           }
         })
         setMessages(messages)
+        const {data: channel} = await axios.get(`http://localhost:3001/channels/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${oauth.access_token}`
+          }
+        })
+        setChannel(channel)
       } catch(err) {
-        console.error(err)
-      }
+        navigate('/oups')
+      } 
     }
     fetch()
-  }, [channel, setMessages, oauth.access_token])
+  }, [id, setMessages, setChannel, oauth.access_token])
   const addMessage = (message) => {
     setMessages([
       ...messages,
@@ -48,8 +56,8 @@ const Channel = ({
   }
   return (
     <div css={styles.root}>
-      <Messages channel={channel} messages={messages} />
-      <MessagesForm addMessage={addMessage} channelId={channel.id} />
+      <Messages messages={messages} channel={channel} />
+      <MessagesForm addMessage={addMessage} channelId={id} />
     </div>
   );
 }

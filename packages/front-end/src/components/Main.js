@@ -4,9 +4,11 @@ import { useContext, useEffect, useState } from 'react';
 import { useTheme } from '@mui/styles';
 import { Drawer, useMediaQuery } from '@mui/material';
 import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
 // Local
 import Channels from './Channels'
 import Channel from './Channel'
+import EmptyChannel from './EmptyChannel'
 import Context from '../Context'
 
 const styles = {
@@ -32,26 +34,6 @@ const Main = () => {
   const {drawerMobileVisible, oauth} = useContext(Context)
   const alwaysOpen = useMediaQuery(theme.breakpoints.up('sm'))
   const isDrawerVisible = alwaysOpen || drawerMobileVisible
-  // Fetch channels from back-end
-  const [channels, setChannels] = useState([])
-  const [currentChannel, setCurrentChannel] = useState(null)
-  useEffect( () => {
-    const fetch = async () => {
-      try {
-        const {data: channels} = await axios.get('http://localhost:3001/channels', {
-          headers: {
-            'Authorization': `Bearer ${oauth.access_token}`
-          }
-        })
-        setChannels(channels)
-        if (channels.length > 0)
-          setCurrentChannel(channels[0])
-      } catch(err) {
-        console.error(err)
-      }
-    }
-    fetch()
-  }, [setChannels, oauth.access_token])
   return (
     <main css={styles.main}>
       <Drawer
@@ -64,9 +46,12 @@ const Main = () => {
         open={isDrawerVisible}
         css={[styles.drawer, isDrawerVisible && styles.drawerVisible]}
       >
-        <Channels channels={channels} setCurrentChannel={setCurrentChannel} />
+        <Channels/>
       </Drawer>
-      {currentChannel ? <Channel channel={currentChannel}/> : '' }
+      <Routes>
+        <Route path=":id" element={<Channel />}/>
+        <Route path="/" element={<EmptyChannel />}/>
+      </Routes>
     </main>
   );
 }
