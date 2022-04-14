@@ -4,7 +4,7 @@
   "description": "Webtech Chating application",
   "main": "./lib/index.js",
   "scripts": {
-    "develop": "TEST_PAYLOAD_EMAIL=admin@example.com ./bin/init && ./node_modules/.bin/nodemon bin/start",
+    "develop": "TEST_PAYLOAD_EMAIL=admin@example.com ./bin/init && PORT=3001 ./node_modules/.bin/nodemon ./bin/start",
     "reset": "./bin/reset",
     "start": "./bin/start",
     "test": "TEST_PAYLOAD_EMAIL=admin@example.com mocha 'test/**/*.js'"
