@@ -44,6 +44,7 @@ const Header = () => {
       >
         <MenuIcon />
       </IconButton>
+      { oauth ? oauth.email : 'Hello to our web chatting application' }
       { oauth ? <Button css={styles.button} onClick={() => setOauth(null)} variant="link">Logout</Button> : '' }
     </header>
   )
