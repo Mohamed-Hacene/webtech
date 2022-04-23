@@ -48,6 +48,7 @@ const MessagesForm = ({
     })
     addMessage(message) // Update react state
     e.target.elements.content.value = '' // Refresh the input form
+    
   } 
   return (
     <form css={styles.form}  onSubmit={onSubmit}>

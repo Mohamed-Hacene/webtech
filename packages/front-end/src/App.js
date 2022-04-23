@@ -13,12 +13,16 @@ import Login from './Login'
 import Context from './Context'
 import Oups from './Oups'
 
+const URL =
+'https://cdn.wallpapersafari.com/12/93/Ei0zCM.jpg'
+
 const useStyles = (theme) => ({
   root: {
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#565E71',
+    backgroundImage: `url(${URL})`,
+    backgroundRepeat:'no-repeat',
     [theme.breakpoints.up('sm')]: {
       padding: '50px',
     },

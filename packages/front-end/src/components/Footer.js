@@ -1,18 +1,27 @@
 
 /** @jsxImportSource @emotion/react */
+import { useContext } from 'react';
+
+import Context from '../Context'
 
 const styles = {
   footer: {
-    height: '30px',
-    backgroundColor: 'rgba(255,255,255,.3)',
+    height: '50px',
+    backgroundColor: 'rgba(65,105,225,.8)',
     flexShrink: 0,
+  },
+  footerLogIn: {
+
   },
 }
 
 const Footer = () => {
+  const {drawerToggleListener, oauth, setOauth} = useContext(Context)
   return (
     <footer style={styles.footer}>
-      footer
+      <footerLogIn style={styles.footerLogIn}>
+      { oauth ? oauth.email : '' }
+      </footerLogIn>   
     </footer>
   );
 }

@@ -10,11 +10,8 @@ import Context from '../Context'
 const useStyles = (theme) => ({
   header: {
     padding: theme.spacing(1),
-    backgroundColor: 'rgba(255,255,255,.3)',
+    backgroundColor: 'rgba(65,105,225,.8)',
     flexShrink: 0,
-  },
-  headerLogIn: {
-    backgroundColor: 'red',
   },
   headerLogOut: {
     backgroundColor: 'blue',
@@ -25,7 +22,8 @@ const useStyles = (theme) => ({
     },
   },
   button: {
-    float: 'right'
+    float: 'right',
+    backgroundColor: 'black'
   }
 })
 
@@ -46,7 +44,6 @@ const Header = () => {
       >
         <MenuIcon />
       </IconButton>
-      Header - { oauth ? oauth.email : 'unauthorized' }
       { oauth ? <Button css={styles.button} onClick={() => setOauth(null)} variant="link">Logout</Button> : '' }
     </header>
   )

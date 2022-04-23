@@ -10,13 +10,18 @@ import getPkce from 'oauth-pkce';
 // Local
 import Context from './Context'
 
+const URL =
+'https://wallpaperaccess.com/full/1287373.jpg'
+
 const useStyles = (theme) => ({
+  
   root: {
     flex: '1 1 auto',
-    background: '#373B44',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    backgroundImage: `url(${URL})`,
+    backgroundRepeat:'no-repeat',
     '& > button': {
       width: 'fit-content',
       margin: 'auto'
@@ -41,7 +46,14 @@ const Redirect = ({config, codeChallenge}) => {
   }
   return (
     <div css={styles.root}>
-      <Button onClick={redirect} variant="contained">Login with OIDC</Button>
+      <Button style={{
+        borderRadius: 35,
+        backgroundColor: 'rgba(65,105,225,.6)',
+        padding: "18px 36px",
+        fontSize: "18px"
+        
+    }}
+    onClick={redirect} variant="contained">Login</Button>
     </div>
   )
 }
