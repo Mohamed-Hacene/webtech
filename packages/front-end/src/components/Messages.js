@@ -61,6 +61,7 @@ const Messages = ({
     setOpen(false);
   };
   const [vaalue, setValue] = useState("");
+  
   return (
     <div css={styles.root}>
       <h1>Messages for {channel.name}</h1>
