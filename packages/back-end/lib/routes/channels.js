@@ -72,6 +72,22 @@ router.post('/:id/messages', async (req, res) => {
   }
 })
 
-// TODO: create messages routes: delete, update, ...
+router.delete('/:id/messages', async (req, res) => {
+  try {
+    const messages = await db.messages.delete(req.params.id, req.body)
+    res.json(messages)
+  } catch(err) {
+    return res.status(400).json(err.message)
+  }
+})
+
+router.put('/:id/messages', async (req, res) => {
+  try {
+    const messages = await db.messages.update(req.params.id, req.body)
+    res.json(messages)
+  } catch(err) {
+    return res.status(400).json(err.message)
+  }
+})
 
 module.exports = router

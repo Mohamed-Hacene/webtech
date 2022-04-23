@@ -78,20 +78,25 @@ module.exports = {
         })
       })
     },
-    delete: async (channelId, creation, req) => {
+    delete: async (channelId, {creation}) => {
       try {
         if(!channelId) throw Error('Invalid channel')
         if(!creation) throw Error('Invalid message')
-        if(!req) throw Error('Invalid request')
-        const idRequester = (await module.exports.users.getByEmail(req.user.email)).id
-        const message = await module.exports.messages.get(channelId, creation)
-        if (message.authorId == idRequester) {
-          await db.del(`messages:${channelId}:${creation}`)
-          return { success: true }
-        }
-        return null
+        await db.get(`messages:${channelId}:${creation}`)
+        await db.del(`messages:${channelId}:${creation}`)
       } catch {
-        return null
+        throw Error('')
+      }
+    },
+    update: async (channelId, {creation, content}) => {
+      try {
+        if(!channelId) throw Error('Invalid channel')
+        if(!creation) throw Error('Invalid message')
+        const message = JSON.parse(await db.get(`messages:${channelId}:${creation}`)) 
+        message.content = content
+        await db.put(`messages:${channelId}:${creation}`, JSON.stringify(message))
+      } catch {
+        throw Error('')
       }
     }
   },

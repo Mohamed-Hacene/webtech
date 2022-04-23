@@ -54,15 +54,38 @@ const Channel = () => {
       message
     ])
   }
-  const delMessage = (message) => {
+  const delMessage = async (idMessage, creation) => {
+    await axios.delete(`http://localhost:3001/channels/${id}/messages`, {
+      headers: {
+        'Authorization': `Bearer ${oauth.access_token}`
+      },
+      data: {
+        creation : creation
+      }
+    })
+    messages.splice(idMessage, 1)
     setMessages([
-      ...messages,
-      message
+      ...messages
+    ])
+  }
+  const updateMessage = async (idMessage, creation, content) => {
+    await axios.put(`http://localhost:3001/channels/${id}/messages`, {
+    creation : creation,
+    content : content
+  },
+  {
+    headers: {
+      'Authorization': `Bearer ${oauth.access_token}`
+    }
+  })
+  messages[idMessage].content = content
+    setMessages([
+      ...messages
     ])
   }
   return (
     <div css={styles.root}>
-      <Messages messages={messages} channel={channel} />
+      <Messages messages={messages} channel={channel} delMessage={delMessage} updateMessage={updateMessage}/>
       <MessagesForm addMessage={addMessage} channelId={id} />
     </div>
   );
