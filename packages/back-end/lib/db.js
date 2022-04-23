@@ -78,7 +78,22 @@ module.exports = {
         })
       })
     },
-    // TODO: add methods: update, delete, ...
+    delete: async (channelId, creation, req) => {
+      try {
+        if(!channelId) throw Error('Invalid channel')
+        if(!creation) throw Error('Invalid message')
+        if(!req) throw Error('Invalid request')
+        const idRequester = (await module.exports.users.getByEmail(req.user.email)).id
+        const message = await module.exports.messages.get(channelId, creation)
+        if (message.authorId == idRequester) {
+          await db.del(`messages:${channelId}:${creation}`)
+          return { success: true }
+        }
+        return null
+      } catch {
+        return null
+      }
+    }
   },
   users: {
     create: async (user) => {

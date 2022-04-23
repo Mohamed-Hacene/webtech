@@ -54,6 +54,12 @@ const Channel = () => {
       message
     ])
   }
+  const delMessage = (message) => {
+    setMessages([
+      ...messages,
+      message
+    ])
+  }
   return (
     <div css={styles.root}>
       <Messages messages={messages} channel={channel} />
