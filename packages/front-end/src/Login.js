@@ -31,7 +31,7 @@ const useStyles = (theme) => ({
 
 const Redirect = ({config, codeChallenge}) => {
   const styles = useStyles(useTheme())
-  const redirect = (e) => {
+  const redirectLogin = (e) => {
     e.stopPropagation()
     const url = [
       `${config.authorization_endpoint}?`,
@@ -44,6 +44,10 @@ const Redirect = ({config, codeChallenge}) => {
     ].join('')
     window.location = url
   }
+  const redirectSignIn = (e) => {
+    e.stopPropagation()
+
+  }
   return (
     <div css={styles.root}>
       <Button style={{
@@ -53,7 +57,15 @@ const Redirect = ({config, codeChallenge}) => {
         fontSize: "18px"
         
     }}
-    onClick={redirect} variant="contained">Login</Button>
+    onClick={redirectLogin} variant="contained">Login</Button>
+    <Button style={{
+        borderRadius: 35,
+        backgroundColor: 'rgba(65,105,225,.6)',
+        padding: "18px 36px",
+        fontSize: "18px"
+        
+    }}
+    onClick={redirectSignIn} variant="contained">Sign-in</Button>
     </div>
   )
 }
