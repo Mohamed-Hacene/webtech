@@ -20,7 +20,7 @@ const Footer = () => {
   return (
     <footer style={styles.footer}>
       <footerLogIn style={styles.footerLogIn}>
-      { oauth ? 'Current Channel' : 'Please Login with the button' }
+      { oauth ? 'Current Channel' : 'Please Login or create an account if you are a new user !' }
       </footerLogIn>   
     </footer>
   );
