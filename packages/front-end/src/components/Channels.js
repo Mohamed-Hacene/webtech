@@ -8,12 +8,20 @@ import { Link as RouterLink } from 'react-router-dom';
 // Local
 import Context from '../Context'
 
+import CreateChannel from './CreateChannel';
+
 const styles = {
   root: {
   },
   channel: {
-    color: '#fff',
+    color: 'dark',
     padding: '.2rem .5rem',
+    whiteSpace: 'nowrap', 
+  },
+  createChannel: {
+    color: 'white',
+    padding: '.2rem .5rem',
+    fontWeight: 'bold',
     whiteSpace: 'nowrap', 
   }
 }
@@ -68,6 +76,9 @@ const Channels = () => {
           </Link>
         </li>
       ))}
+      <li style={styles.createChannel}>
+          <CreateChannel>+ Create Channel</CreateChannel>
+        </li>
     </ul>
   );
 }
