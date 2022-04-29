@@ -18,6 +18,9 @@ import calendar from 'dayjs/plugin/calendar'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import { Button } from '@mui/material'
 
+import { useContext } from 'react';
+import Context from '../Context'
+
 dayjs.extend(calendar)
 dayjs.extend(updateLocale)
 dayjs.updateLocale('en', {
@@ -61,7 +64,7 @@ const Messages = ({
     setOpen(false);
   };
   const [vaalue, setValue] = useState("");
-  
+  const {oauth} = useContext(Context)
   return (
     <div css={styles.root}>
       <h1>Messages for {channel.name}</h1>
@@ -80,9 +83,9 @@ const Messages = ({
                 {' - '}
                 <span>{dayjs().calendar(message.creation)}</span>
                 {' - '}
-                <Button onClick= { async () => {await delMessage(i, message.creation)}}>Delete</Button>
+                <Button color="error" disabled={oauth.email !== message.author} onClick= { async () => {await delMessage(i, message.creation)}}>Delete</Button>
                 {' - '}
-                <Button onClick={handleClickOpen} >Update</Button>
+                <Button color="success" disabled={oauth.email !== message.author} onClick={handleClickOpen} >Update</Button>
                 <Dialog open={open} onClose={handleClose}>
                   <DialogTitle>Update your message</DialogTitle>
                   <DialogContent>

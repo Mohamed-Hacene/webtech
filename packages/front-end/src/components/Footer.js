@@ -11,8 +11,8 @@ const styles = {
     flexShrink: 0,
   },
   footerLogIn: {
-
-  },
+    padding: '5px'
+  }
 }
 
 const Footer = () => {
@@ -20,7 +20,7 @@ const Footer = () => {
   return (
     <footer style={styles.footer}>
       <footerLogIn style={styles.footerLogIn}>
-      { oauth ? 'Current Channel' : 'Please Login or create an account if you are a new user !' }
+      { oauth ? '' : 'Please Login or create an account if you are a new user !' }
       </footerLogIn>   
     </footer>
   );
