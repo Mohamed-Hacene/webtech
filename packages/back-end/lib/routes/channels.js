@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const channel = await db.channels.create(req.body)
+    const channel = await db.channels.create(req.body.channel)
     res.status(201).json(channel)
   } catch (err) {
     res.status(400).json(createResponseError(err.message))

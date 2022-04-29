@@ -5,6 +5,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { Button } from '@mui/material'
 // Local
 import Context from '../Context'
 
@@ -28,6 +29,15 @@ const styles = {
 
 const Channels = () => {
   const {channels, setChannels, oauth} = useContext(Context)
+  const deleteChannel = async (id) => {
+    await axios.delete(`http://localhost:3001/channels/${id}` ,  {
+      headers: {
+        'Authorization': `Bearer ${oauth.access_token}`
+      }
+    })
+    channels.splice(id,1)
+    setChannels([...channels])
+  }
   const navigate = useNavigate();
   // Fetch channels from back-end
   useEffect( () => {
@@ -74,6 +84,7 @@ const Channels = () => {
           >
             {channel.name}
           </Link>
+          <Button color="error" onClick={ async () => {await deleteChannel(channel.id)}}>Delete</Button>
         </li>
       ))}
       <li style={styles.createChannel}>
