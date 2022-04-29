@@ -90,19 +90,9 @@ const config = {
     }]
   },{
     name: 'Channel 2',
-    messages: [{
-      author: 'john',
-      creation: 1602223579200,
-      content: `
-      Ping
-      `.replace(/^ {6}/gm,'')
-    },{
-      author: 'bob',
-      creation: 1602523579200,
-      content: `
-      Pong
-      `.replace(/^ {6}/gm,'')
-    }]
+    messages: [
+      
+    ]
   }].map( async (channel) => {
     const {data: {id}} = await axios.post(`http://localhost:${config.port}/channels`, {
       name: channel.name
